@@ -9,10 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import tacos.tacocloud.entities.Ingredient;
 import tacos.tacocloud.entities.Taco;
 import tacos.tacocloud.entities.TacoOrder;
-import tacos.tacocloud.repositories.JdbcIngredientRepository;
+import tacos.tacocloud.repositories.IngredientRepository;
 
 import javax.validation.Valid;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,16 +20,16 @@ import java.util.stream.Collectors;
 @RequestMapping("/design")
 @SessionAttributes("tacoOrder") // tacoOrder will be maintained in the session to be accessed in other requests and finish the order creation process
 public class DesignTacoController {
-    private final JdbcIngredientRepository jdbcIngredientRepository;
+    private final IngredientRepository ingredientRepository;
 
     @Autowired
-    public DesignTacoController(JdbcIngredientRepository jdbcIngredientRepository) {
-        this.jdbcIngredientRepository = jdbcIngredientRepository;
+    public DesignTacoController(IngredientRepository ingredientRepository) {
+        this.ingredientRepository = ingredientRepository;
     }
 
     @ModelAttribute
     public void addIngredientToModel(Model model) {
-        List<Ingredient> ingredients = (List<Ingredient>) jdbcIngredientRepository.findAll();
+        List<Ingredient> ingredients = (List<Ingredient>) ingredientRepository.findAll();
 
         for(Ingredient.Type type : Ingredient.Type.values()) {
             model.addAttribute(

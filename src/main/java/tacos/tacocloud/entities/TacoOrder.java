@@ -2,19 +2,20 @@ package tacos.tacocloud.entities;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.CreditCardNumber;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
 
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Data
+@Table
 public class TacoOrder implements Serializable {
     private static final long serialVersionUID = 1L;
+    @Id
     private Long id;
     @NotBlank(message="Name is required")
     private String deliveryName;
@@ -23,6 +24,7 @@ public class TacoOrder implements Serializable {
     @NotBlank(message="City is required")
     private String deliveryCity;
     @NotBlank(message="State is required")
+    @Size(max=2, message="State must be 2 characters")
     private String deliveryState;
     @NotBlank(message="Zip code is required")
     private String deliveryZip;

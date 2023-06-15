@@ -12,6 +12,7 @@ import tacos.tacocloud.entities.TacoOrder;
 import tacos.tacocloud.repositories.OrderRepository;
 
 import javax.validation.Valid;
+import java.util.Date;
 
 @Slf4j
 @Controller
@@ -35,8 +36,11 @@ public class OrderController {
             return "orderForm";
         }
 
+        tacoOrder.setPlacedAt(new Date());
         orderRepository.save(tacoOrder);
+
         log.info("Order submitted: {}", tacoOrder);
+
         sessionStatus.setComplete();
 
         return "redirect:/";
